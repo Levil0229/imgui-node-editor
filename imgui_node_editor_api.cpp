@@ -158,7 +158,7 @@ void ax::NodeEditor::EndPin()
     s_Editor->GetNodeBuilder().EndPin();
 }
 
-void ax::NodeEditor::Group(const ImVec2& size)
+void ax::NodeEditor::Group(ImVec2& size)
 {
     s_Editor->GetNodeBuilder().Group(size);
 }

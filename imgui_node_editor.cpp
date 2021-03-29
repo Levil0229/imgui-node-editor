@@ -4919,7 +4919,7 @@ void ed::NodeBuilder::PinPivotAlignment(const ImVec2& alignment)
     m_ResolvePivot   = true;
 }
 
-void ed::NodeBuilder::Group(const ImVec2& size)
+void ed::NodeBuilder::Group(ImVec2& size)
 {
     IM_ASSERT(nullptr != m_CurrentNode);
     IM_ASSERT(nullptr == m_CurrentPin);
@@ -4928,9 +4928,9 @@ void ed::NodeBuilder::Group(const ImVec2& size)
     m_IsGroup = true;
 
     if (IsGroup(m_CurrentNode))
-        ImGui::Dummy(m_CurrentNode->m_GroupBounds.GetSize());
-    else
-        ImGui::Dummy(size);
+      size = m_CurrentNode->m_GroupBounds.GetSize();
+        
+    ImGui::Dummy(size);
 
     m_GroupBounds = ImGui_GetItemRect();
     m_GroupBounds.Floor();
