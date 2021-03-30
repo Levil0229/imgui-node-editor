@@ -445,8 +445,11 @@ bool ax::NodeEditor::AcceptCreateNode() {
 
 const char* ax::NodeEditor::GetActionName() {
   auto action = s_Editor->GetCurrentAction();
-  if (action) return s_Editor->GetCurrentAction()->GetName();
-  return nullptr;
+  if (action) {
+    return s_Editor->GetCurrentAction()->GetName();
+  }
+
+  return "";
 }
 
 int ax::NodeEditor::GetActionContextSize() {
