@@ -314,6 +314,10 @@ ImVec2 ax::NodeEditor::GetNodeSize(NodeId nodeId) {
   return s_Editor->GetNodeSize(nodeId);
 }
 
+void ax::NodeEditor::SetGroupSize(NodeId nodeId, const ImVec2& size) {
+  return s_Editor->SetGroupSize(nodeId, size);
+}
+
 void ax::NodeEditor::CenterNodeOnScreen(NodeId nodeId) {
   if (auto node = s_Editor->FindNode(nodeId)) node->CenterOnScreenInNextFrame();
 }
@@ -450,6 +454,39 @@ const char* ax::NodeEditor::GetActionName() {
   }
 
   return "";
+}
+
+int ax::NodeEditor::GetDragActionNodesCount() {
+  if (s_Editor->GetCurrentAction()) {
+    auto action = s_Editor->GetCurrentAction()->AsDrag();
+    return action->m_Objects.size();
+  }
+
+  return 0;
+}
+
+int ax::NodeEditor::GetDragActionNodes(NodeId* nodes, int size) {
+  if (s_Editor->GetCurrentAction()) {
+    auto action = s_Editor->GetCurrentAction()->AsDrag();
+    if (action) {
+      return BuildIdList(action->m_Objects, nodes, size, [](auto object) {
+        return object->AsNode() != nullptr;
+      });
+    }
+  }
+
+  return 0;
+}
+
+ax::NodeEditor::NodeId ax::NodeEditor::GetSizeActionNode() {
+  if (s_Editor->GetCurrentAction()) {
+    auto action = s_Editor->GetCurrentAction()->AsSize();
+    if (action) {
+      return static_cast<ax::NodeEditor::NodeId>(action->m_SizedNode->ID());
+    }
+  }
+
+  return 0;
 }
 
 int ax::NodeEditor::GetActionContextSize() {

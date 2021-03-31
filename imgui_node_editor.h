@@ -278,6 +278,7 @@ void EndDelete();
 void SetNodePosition(NodeId nodeId, const ImVec2& editorPosition);
 ImVec2 GetNodePosition(NodeId nodeId);
 ImVec2 GetNodeSize(NodeId nodeId);
+void SetGroupSize(NodeId nodeId, const ImVec2& size);
 void CenterNodeOnScreen(NodeId nodeId);
 
 void RestoreNodeState(NodeId nodeId);
@@ -319,6 +320,9 @@ bool AcceptPaste();
 bool AcceptDuplicate();
 bool AcceptCreateNode();
 const char* GetActionName();
+int GetDragActionNodesCount();
+int GetDragActionNodes(NodeId* nodes, int size);
+NodeId GetSizeActionNode();
 int GetActionContextSize();
 int GetActionContextNodes(NodeId* nodes, int size);
 int GetActionContextLinks(LinkId* links, int size);
