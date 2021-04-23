@@ -312,10 +312,34 @@ IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARA
             io.KeysDown[wParam] = 0;
         return 0;
     case WM_CHAR:
-        // You can also use ToAscii()+GetKeyboardState() to retrieve characters.
-        if (wParam > 0 && wParam < 0x10000)
-            io.AddInputCharacter((unsigned short)wParam);
+    {
+        DWORD wChar = wParam;
+        if (wChar <= 127)
+        {
+            io.AddInputCharacter(wChar);
+        }
         return 0;
+    }
+    case WM_IME_CHAR:
+    {
+        auto& io = ImGui::GetIO();
+        DWORD wChar = wParam;
+        if (wChar <= 127)
+        {
+            io.AddInputCharacter(wChar);
+        }
+        else
+        {
+            // swap lower and upper part.
+            BYTE low = (BYTE)(wChar & 0x00FF);
+            BYTE high = (BYTE)((wChar & 0xFF00) >> 8);
+            wChar = MAKEWORD(high, low);
+            wchar_t ch[6];
+            MultiByteToWideChar(CP_ACP, 0, (LPCSTR)&wChar, 4, ch, 3);
+            io.AddInputCharacter(ch[0]);
+        }
+        return 0;
+    }
     case WM_SETCURSOR:
         if (LOWORD(lParam) == HTCLIENT && ImGui_ImplWin32_UpdateMouseCursor())
             return 1;
