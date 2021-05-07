@@ -297,8 +297,8 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
   MSG msg = {};
   while (msg.message != WM_QUIT) {
     if (PeekMessage(&msg, nullptr, 0U, 0U, PM_REMOVE)) {
-      if (msg.message == WM_KEYDOWN && (msg.wParam == VK_ESCAPE))
-        PostQuitMessage(0);
+      // if (msg.message == WM_KEYDOWN && (msg.wParam == VK_ESCAPE))
+      //  PostQuitMessage(0);
 
       TranslateMessage(&msg);
       DispatchMessage(&msg);
