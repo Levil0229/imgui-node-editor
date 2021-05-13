@@ -326,7 +326,7 @@ IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARA
         DWORD wChar = wParam;
         if (wChar <= 127)
         {
-            io.AddInputCharacter(wChar);
+            // io.AddInputCharacter(wChar);
         }
         else
         {
